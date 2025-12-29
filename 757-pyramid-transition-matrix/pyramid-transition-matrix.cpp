@@ -1,45 +1,45 @@
-#include <bits/stdc++.h>
-using namespace std;
 
 class Solution {
 public:
-    int mp[7][7];
-    unordered_map<string, bool> dp;
-
-    bool pyramidTransition(string x, vector<string>& y) {
-        memset(mp, 0, sizeof(mp));
-
-        for (auto &z : y)
-            mp[z[0]-'A'][z[1]-'A'] |= (1 << (z[2]-'A'));
-
-        dp.clear();
-        return solve(x, "");
-    }
-
-    bool solve(string x, string y) {
-        if (x.size() == 1)
-            return true;
-
-        if (y.size() + 1 == x.size())
-            return solve(y, "");
-
-        string z = x + "." + y;
-        if (dp.count(z))
-            return dp[z];
-
-        int i = y.size();
-        int a = x[i] - 'A';
-        int b = x[i + 1] - 'A';
-
-        int mask = mp[a][b];
-
-        for (int k = 0; k < 7; k++) {
-            if ((mask >> k) & 1) {
-                if (solve(x, y + char(k + 'A')))
-                    return dp[z] = true;
-            }
+    bool pyramidTransition(string bottom, vector<string>& allowed) {
+        vector<int> groups[7][7];
+        for (auto& s : allowed) {
+            
+            groups[s[0] & 31][s[1] & 31].push_back(s[2] & 31);
         }
 
-        return dp[z] = false;
+        int n = bottom.size();
+        vector<int> pyramid(n);
+        for (int i = 0; i < n; i++) {
+            pyramid[n - 1] |= (bottom[i] & 31) << (i * 3); 
+        }
+
+        vector<uint8_t> vis(1 << ((n - 1) * 3));
+
+        auto dfs = [&](this auto&& dfs, int i, int j) -> bool {
+            if (i < 0) {
+                return true;
+            }
+
+            if (vis[pyramid[i]]) {
+                return false;
+            }
+
+            if (j == i + 1) {
+                vis[pyramid[i]] = true;
+                return dfs(i - 1, 0);
+            }
+
+            for (int top : groups[pyramid[i + 1] >> (j * 3) & 7][pyramid[i + 1] >> ((j + 1) * 3) & 7]) {
+                pyramid[i] &= ~(7 << (j * 3)); 
+                pyramid[i] |= top << (j * 3);
+                if (dfs(i, j + 1)) {
+                    return true;
+                }
+            }
+            return false;
+        };
+
+        return dfs(n - 2, 0);
     }
 };
