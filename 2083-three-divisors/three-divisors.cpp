@@ -1,17 +1,15 @@
 class Solution {
 public:
     bool isThree(int n) {
-        int count=0;
-        for(int i=1;i*i<=n;i++)
-        {
-            if(n%i==0)
-            {   count++;
-                if(n/i!=i)
-              {  count++;}
-            }
-        }
-      
+        int root=sqrt(n);
+        if(root*root!=n)
+        return 0;
 
-        return count==3;
+        for(int i=2;i*i<=root;i++)
+        {
+           if(root%i==0)
+           return 0;
+        }
+        return root>1;
     }
 };
