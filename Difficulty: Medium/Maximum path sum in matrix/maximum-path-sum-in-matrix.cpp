@@ -1,40 +1,26 @@
+// User function Template for C++
+
 class Solution {
-public:
-    int xyz(int day, int last,
-            vector<vector<int>>& mat,
-            vector<vector<int>>& dp)
-    {
-        if(dp[day][last] != -1)
-            return dp[day][last];
+  public:
+    int maximumPath(vector<vector<int>>& matrix) {
+        // code here
+             int n=matrix.size();
+        int m=matrix[0].size();
 
-        int m = mat[0].size();
+        vector<int>dp(matrix[n-1]);
 
-        if(day == 0) {
-            int best = 0;
-            for(int i = 0; i < m; i++) {
-                if(last == m || abs(i - last) <= 1)
-                    best = max(best, mat[0][i]);
+        for(int i=n-2;i>=0;i--)
+        {    vector<int>curr(m,0);
+            for(int j=0;j<m;j++)
+            {
+                int down=dp[j];
+                int  downleft=j>0?dp[j-1]:-1e9;
+                int downright=j<m-1?dp[j+1]:-1e9;
+
+                curr[j]=matrix[i][j]+max({down,downleft,downright});
             }
-            return dp[day][last] = best;
+            dp=curr;
         }
-
-        int best = 0;
-        for(int i = 0; i < m; i++) {
-            if(last == m || abs(i - last) <= 1) {
-                int val = mat[day][i]
-                          + xyz(day-1, i, mat, dp);
-                best = max(best, val);
-            }
-        }
-
-        return dp[day][last] = best;
-    }
-
-    int maximumPath(vector<vector<int>>& mat) {
-        int n = mat.size();
-        int m = mat[0].size();
-
-        vector<vector<int>> dp(n, vector<int>(m+1, -1));
-        return xyz(n-1, m, mat, dp); 
+        return *max_element(dp.begin(),dp.end());
     }
 };
