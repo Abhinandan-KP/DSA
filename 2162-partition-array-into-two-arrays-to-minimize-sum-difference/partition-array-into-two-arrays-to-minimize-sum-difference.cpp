@@ -25,28 +25,25 @@ public:
             }
             rightSums[cnt].push_back(sum);
         }
-        for (int i = 0; i <= n; i++) {
-            sort(rightSums[i].begin(), rightSums[i].end());
-        }
+
+        for (auto &v : rightSums)
+            sort(v.begin(), v.end());
 
         int mini = INT_MAX;
         for (int k = 0; k <= n; k++) {
             int need = n - k;
+            auto &rVec = rightSums[need];
 
             for (int s1 : leftSums[k]) {
                 int target = totalSum / 2 - s1;
-                auto &r = rightSums[need];
+                auto it = lower_bound(rVec.begin(), rVec.end(), target);
 
-                auto it = lower_bound(r.begin(), r.end(), target);
+                if (it != rVec.end())
+                    mini = min(mini, abs(totalSum - 2 * (s1 + *it)));
 
-                if (it != r.end()) {
-                    int sum1 = s1 + *it;
-                    mini = min(mini, abs(totalSum - 2 * sum1));
-                }
-                if (it != r.begin()) {
+                if (it != rVec.begin()) {
                     --it;
-                    int sum1 = s1 + *it;
-                    mini = min(mini, abs(totalSum - 2 * sum1));
+                    mini = min(mini, abs(totalSum - 2 * (s1 + *it)));
                 }
             }
         }
