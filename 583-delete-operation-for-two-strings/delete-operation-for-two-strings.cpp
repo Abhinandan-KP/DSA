@@ -3,7 +3,7 @@ public:
     int minDistance(string s, string t) {
     int n=s.size();
     int m=t.size();
-vector<int>prev(m+1,0),curr(m+1,0);
+vector<int>prev(m+1,0),curr(m+1,0); //keep m+1 becoz both prev and curr are traversing on m 
     for(int i=1;i<=n;i++)
    {
        for(int j=1;j<=m;j++)
