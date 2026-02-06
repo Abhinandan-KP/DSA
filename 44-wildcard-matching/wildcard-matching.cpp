@@ -32,10 +32,10 @@ return dp[i][j] = wildcardMatchingUtil(S1, S2, i - 1, j - 1, dp);
 
     }
     
-    bool isMatch(string s, string p) {
-         int n = p.size();
-        int m = s.size();
+    bool isMatch(string S1, string S2) {
+         int n = S2.size();
+        int m = S1.size();
     vector<vector<int>> dp(n, vector<int>(m, -1));
-    return wildcardMatchingUtil(p, s, n - 1, m - 1, dp);
+    return wildcardMatchingUtil(S2, S1, n - 1, m - 1, dp);
     }
 };
