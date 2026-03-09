@@ -1,31 +1,26 @@
 class Solution {
 public:
-  int helper(const vector<int>& arr, int k, int start, vector<int>& memo) {
+
+        int maxSumAfterPartitioning(vector<int>& arr, int k) {
         int n = (int)arr.size();
 
-        if (start == n) return 0;
+        vector<int> dp(n + 1, 0); 
 
-        if (memo[start] != -1) return memo[start];
+        for (int i = n - 1; i >= 0; i--) {
+            int maxElem = 0;
+            int maxSum = 0;
 
-        int maxSum = 0;    
-        int maxElem = 0;   
+            for (int length = 1; length <= k && i + length <= n; length++) {
+                maxElem = max(maxElem, arr[i + length - 1]);
 
-        for (int length = 1; length <= k && start + length <= n; length++) {
-            maxElem = max(maxElem, arr[start + length - 1]);
+                int currentSum = maxElem * length + dp[i + length];
 
-            int currentSum = maxElem * length + helper(arr, k, start + length, memo);
+                maxSum = max(maxSum, currentSum);
+            }
 
-            maxSum = max(maxSum, currentSum);
+            dp[i] = maxSum;
         }
 
-        return memo[start] = maxSum;
-    }
-
-    int maxSumAfterPartitioning(vector<int>& arr, int k) {
-              int n = (int)arr.size();
-
-        vector<int> memo(n, -1);
-
-        return helper(arr, k, 0, memo);
+        return dp[0];
     }
 };
