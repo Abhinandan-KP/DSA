@@ -3,37 +3,25 @@ public:
     void setZeroes(vector<vector<int>>& arr) {
         int m=arr.size();
         int n=arr[0].size();
-
-
+        vector<int>row(m,0);
+        vector<int>col(n,0);
         for(int i=0;i<m;i++)
         {
             for(int j=0;j<n;j++)
             {
                 if(arr[i][j]==0)
-                {
-                    for(int col=0;col<n;col++)
-                    {
-                        if (arr[i][col] != 0)
-                        arr[i][col]='a';
-                    }
-                    for(int row=0;row<m;row++)
-                    {
-          if (arr[row][j] != 0)
-
-                        arr[row][j]='a';
-                    }
-                }
+               { row[i]=1;
+                col[j]=1;}
             }
         }
-      
-      for(int i=0;i<m;i++)
-      {
-    for(int j=0;j<n;j++)
-    {
-        if(arr[i][j]=='a')
-        arr[i][j]=0;
-    }
-      }
 
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                 if(row[i]==1 || col[j]==1)
+                 arr[i][j]=0;
+            }
+        }
     }
 };
