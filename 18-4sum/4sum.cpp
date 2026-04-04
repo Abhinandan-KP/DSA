@@ -1,34 +1,38 @@
 class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& arr, int target) {
-         int n = arr.size();
-        set<vector<long long>> s;
+         int n=arr.size();
+         vector<vector<int>>ans;
+         sort(arr.begin(),arr.end());
+         
+         for(int i=0;i<n;i++)
+         {
+                        if (i > 0 && arr[i] == arr[i - 1]) continue;
 
-        for(int i = 0; i < n; i++) {
-            for(int j = i + 1; j < n; j++) {
-
-                unordered_set<long long> p;
-
-                for(int k = j + 1; k < n; k++) {
-
-                    long long thi = (long long)target - ((long long)arr[i] + arr[j] + arr[k]);  // ✅ FIX
-
-                    if(p.find(thi) != p.end()) {
-                        vector<long long> temp = {(long long)arr[i], arr[j], arr[k], thi};
-                        sort(temp.begin(), temp.end());
-                        s.insert(temp);
+             for(int j=i+1;j<n;j++ )
+             {
+                if(j>i+1 && arr[j]==arr[j-1])  continue;
+              int   left=j+1,right=n-1;
+                while(left<right)
+                {
+                    long long sum=(long long)arr[i]+arr[j]+arr[left]+arr[right];
+                    if(sum==target)
+                    {
+                        ans.push_back({arr[i],arr[j],arr[left],arr[right]});
+                        left++,right--;
+                          while(left<right && arr[left]==arr[left-1])
+                    left++;
+                    while(left<right && arr[right]==arr[right+1])
+                    right--;
                     }
-
-                    p.insert(arr[k]);
+                  
+                    else if(sum<target)
+                    left++;
+                    else
+                    right--;
                 }
-            }
-        }
-
-        vector<vector<int>> ans;
-        for(auto &vec : s) {
-            ans.push_back({(int)vec[0], (int)vec[1], (int)vec[2], (int)vec[3]});
-        }
-
-        return ans;
+             }
+         }
+         return ans;
     }
 };
