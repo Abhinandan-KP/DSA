@@ -1,22 +1,23 @@
 class Solution {
   public:
-    vector<int> findTwoElement(vector<int>& arr) {
+    vector<int> findTwoElement(vector<int>& nums) {
         // code here
-        unordered_map<int,int>p;
-        vector<int>ans;
-        int n=arr.size();
-        int repeating=0,missing=0;
-        for(int x:arr)
-        {
-            p[x]++;
+        int n = nums.size(); 
+        int hash[n + 1] = {0};
+    for (int i = 0; i < n; i++) {
+            hash[nums[i]]++;
         }
-        for(int i=1;i<=n;i++)
-        {
-            if(p[i]==2)
-            repeating = i;
-            else if(p[i]==0)
-             missing = i;
+ int repeating = -1, missing = -1;
+      for (int i = 1; i <= n; i++) {
+            if (hash[i] == 2) {
+                repeating = i;
+            } else if (hash[i] == 0) {
+                missing = i;
+            }
+if (repeating != -1 && missing != -1) {
+                break;
+            }
         }
-        return {repeating,missing};
+      return {repeating,missing};
     }
 };
