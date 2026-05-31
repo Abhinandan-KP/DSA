@@ -16,6 +16,8 @@ public:
                 cnt_max=cnt_ones;
                 index=i;
             }
+            if(cnt_ones==m)
+            break;
         }
         return {index,cnt_max};
     }
