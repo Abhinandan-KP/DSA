@@ -1,15 +1,16 @@
 class Solution {
 public:
+  
     vector<int> rowAndMaximumOnes(vector<vector<int>>& mat) {
-        int cnt_max=0;
-        int index=0;
-        for(int i=0;i<mat.size();i++)
-        {
-            int cnt_ones=0;
-            for(int j=0;j<mat[0].size();j++)
-            {
-                cnt_ones+=mat[i][j];
-            }
+        int n=mat.size(),m=mat[0].size();
+        int cnt_max=0,index=0;
+        
+        for(int i=0;i<n;i++)
+        {  int cnt_ones=0;
+             for(int val:mat[i])
+             {
+                cnt_ones+=val;
+             }
             if(cnt_ones>cnt_max)
             {
                 cnt_max=cnt_ones;
