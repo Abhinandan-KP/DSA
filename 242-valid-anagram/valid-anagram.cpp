@@ -1,13 +1,18 @@
 class Solution {
 public:
-    bool isAnagram(string str1, string str2) {
-        if(str1.length()!=str2.length()) return false;
-        sort(str1.begin(),str1.end());
-        sort(str2.begin(),str2.end());
-        for(int i=0;i<str1.size();i++)
-        {
-             if(str1[i]!=str2[i]) return false;
-        }
-        return true;
+    bool isAnagram(string s, string t) {
+        if(s.size()!=t.size()) return false;
+        int freq[26]={0};
+        int n=s.size();
+        for(int i=0;i<n;i++)
+        { 
+            freq[s[i]-'a']++;
+            freq[t[i]-'a']--;
+        } 
+       for(int i=0;i<26;i++)
+       {
+          if(freq[i]!=0) return false;
+       }
+       return true;
     }
 };
