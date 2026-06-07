@@ -1,0 +1,25 @@
+class Solution {
+public:
+  int atmost(string& s,int k)
+  {
+      int n=s.size();
+      int left=0,res=0;
+      unordered_map<char,int>freq;
+      for(int right=0;right<n;right++)
+      {
+        freq[s[right]]++;
+        while(freq.size()>k)
+        {
+            freq[s[left]]--;
+            if(freq[s[left]]==0)  freq.erase(s[left]);
+           left++;
+        }
+        res+=(right-left+1);
+      }
+      return res;
+  }
+    int numberOfSubstrings(string s) {
+        int res=0;
+        return res= atmost(s,3)-atmost(s,2);
+    }
+};
