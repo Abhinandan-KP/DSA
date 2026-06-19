@@ -16,22 +16,56 @@ public:
 
 class Solution {
 public:
-    Node* copyRandomList(Node* head) {
-        unordered_map<Node*,Node*>nodeMap;
-        Node*temp=head;
-       while(temp)
-       {
-         nodeMap[temp]=new Node(temp->val);
-         temp=temp->next;
-       }
-        temp=head;
-        while(temp)
+void intercopy(Node*head)
+{
+    Node*temp=head;
+    while(temp)
+    {
+        Node*nextele=temp->next;
+        Node*copy=new Node(temp->val);
+        copy->next=nextele;
+        temp->next=copy;
+        temp=nextele;
+        //temp -> copy ->nextelement
+    }
+}
+void connectrandom(Node*head)
+{
+    Node*temp=head;
+    while(temp)
+    {
+        Node*copynode=temp->next;
+        if(temp->random)
         {
-           Node* copynode = nodeMap[temp];
-           copynode->next=nodeMap[temp->next];
-           copynode->random=nodeMap[temp->random];
-           temp=temp->next;
+            copynode->random=temp->random->next;
         }
-        return nodeMap[head];
+        else
+        {
+            copynode->random=NULL;
+        }
+        temp=temp->next->next;
+        //temp->copynode->(temp->next->next)
+    }
+}
+Node*getdeep(Node*head)
+{
+    Node*temp=head;
+    Node*dummy=new Node(-1);
+    Node*res=dummy;
+    while(temp)
+    {
+        res->next=temp->next;  // (res->next=temp->next(copy))
+        res=res->next;
+        temp->next=temp->next->next;
+        temp=temp->next;
+        // temp->res(copy)->(temp->next->next)
+    }
+    return dummy->next;
+}
+    Node* copyRandomList(Node* head) {
+        if(!head) return NULL;
+        intercopy(head);
+        connectrandom(head);
+        return getdeep(head);
     }
 };
