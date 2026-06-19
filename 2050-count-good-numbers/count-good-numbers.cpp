@@ -1,24 +1,22 @@
 class Solution {
 public:
-   long long power(long long base,long long exp)
-   {
+ long long power(long long val,long long exp)
+ {   long long MOD=1e9+7;
     long long res=1;
-    long long MOD=1e9+7;
-    base=base%MOD;
-    while(exp)
-    {
-        if(exp%2==1) res=(res*base)%MOD;
-        base=(base*base)%MOD;
-        exp/=2;
-    }
-    return res;
-   }
+    val=val%MOD;
+     while(exp)
+     {
+           if(exp%2==1) res=(res*val)%MOD;
+           val=(val*val)%MOD;
+           exp/=2;
+     }
+     return res;
+ }
     int countGoodNumbers(long long n) {
-        long long   MOD=1e9+7;
-        long long evenslots=(n+1)/2;
-        long long oddslots=n/2;
-        long long totaleven=power(5,evenslots);
-        long long totalodd=power(4,oddslots);
-        return (totaleven*totalodd)%MOD;
+        long long MOD=1e9+7;
+        
+        long long evenslots = power(5,(n+1)/2);
+        long long oddslots =power(4,n/2);
+        return (evenslots*oddslots)%MOD;
     }
 };
