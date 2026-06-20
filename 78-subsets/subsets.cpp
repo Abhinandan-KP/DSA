@@ -1,26 +1,22 @@
 class Solution {
 public:
-    vector<vector<int>> ans;
-
-    void printF(int ind, vector<int>& ds, vector<int>& nums, int n) {
-      
-        if (ind == n) {
-            ans.push_back(ds);   
-            return;
+   void helper(vector<int>&nums,int i,int n,vector<int>&curr,vector<vector<int>>&x)
+   {
+        if(i==n)
+        {
+       x.push_back(curr);
+       return;
         }
-
-        
-        printF(ind + 1, ds, nums, n);
-
-     
-        ds.push_back(nums[ind]);
-        printF(ind + 1, ds, nums, n);
-        ds.pop_back(); 
-    }
-
+        helper(nums,i+1,n,curr,x);
+        curr.push_back(nums[i]);
+        helper(nums,i+1,n,curr,x);
+        curr.pop_back();
+   }
     vector<vector<int>> subsets(vector<int>& nums) {
-        vector<int> ds;
-        printF(0, ds, nums, nums.size());
-        return ans;
+        int n=nums.size();
+        vector<int>curr;
+        vector<vector<int>>boom;
+        helper(nums,0,n,curr,boom);
+        return boom;
     }
 };
