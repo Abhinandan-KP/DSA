@@ -6,7 +6,7 @@ class Solution {
     if(sum<0||ind==nums.size()) return 0;
     if(dp[ind][sum]!=-1) return dp[ind][sum];
      
-    return dp[ind][sum]=(fun(ind+1,sum-nums[ind],nums,dp)||fun(ind+1,sum,nums,dp));
+    return dp[ind][sum]=(fun(ind+1,sum-nums[ind],nums,dp)|fun(ind+1,sum,nums,dp));
  }
     bool checkSubsequenceSum(vector<int>& arr, int k) {
         // Code here
