@@ -20,7 +20,7 @@ public:
             ans++;
             sum+=d;
         }
-        if(ans>INT_MAX && !ispositive) return INT_MAX;
+        if(ans>INT_MAX && ispositive) return INT_MAX;
         if(ans>INT_MAX && !ispositive) return INT_MIN;
         return ispositive?ans:-1*ans;
     }
