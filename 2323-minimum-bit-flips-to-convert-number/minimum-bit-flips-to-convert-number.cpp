@@ -1,18 +1,13 @@
 class Solution {
 public:
-    int minBitFlips(int a, int b) {
-
-         int XorResult = a ^ b;
-    int count = 0;
-
-    while (XorResult)
-    {
-        if (XorResult & 1)
+    int minBitFlips(int s, int g) {
+        int a=s^g;
+        int count=0;
+        for(int i=0;i<32;i++)
         {
-            count++;
+            count+=a&1;
+             a=a>>1;
         }
-        XorResult >>= 1;
-    }
-    return count;
+        return count;
     }
 };
