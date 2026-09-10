@@ -10,49 +10,34 @@
  */
 class Solution {
 public:
-
-    ListNode* reverseList( ListNode* head) {
-     ListNode* prev = NULL;
-     ListNode* curr = head;
-     ListNode* next = NULL;
-
-    while (curr != NULL) {
-        next = curr->next; 
-        curr->next = prev; 
-        prev = curr;       
-        curr = next;     
+ListNode*reverse(ListNode*head)
+{
+    ListNode*prev=NULL;
+    ListNode*curr=head;
+    while(curr!=NULL)
+    {
+       ListNode*nextnode=curr->next;
+        curr->next=prev;
+        prev=curr;      
+        curr=nextnode;
     }
-    return prev; 
+    return prev;
 }
- 
     bool isPalindrome(ListNode* head) {
-        if(head==NULL || head->next==NULL )
-        {
-            return true;
+        if(head==NULL ||head->next==NULL) return true;
+        ListNode*fast=head,*slow=head;
+        while( fast!=NULL && fast->next!=NULL)
+        {  slow=slow->next;
+            fast=fast->next->next;
         }
-        ListNode*fast=head;
-      
-        ListNode*slow=head;
-        
-        while(fast->next!=NULL  &&  fast->next->next!=NULL)
-        {
-              fast=fast->next->next;
-              slow=slow->next;
-        } 
-        ListNode*temp=reverseList(slow->next);
-          ListNode*first=head;
-            ListNode*second=temp;
-        while(second!=NULL)
-        {
-            if(first->val!=second->val)
-            {   
-                reverseList(temp);
-                return false;
-            }
-            first=first->next;
-            second=second->next;
-        }
-        reverseList(temp);
-        return true;
+       ListNode*sec=reverse(slow);
+       ListNode*fir=head;
+        while(fir!=NULL && sec!=NULL)
+       { if(sec->val!=fir->val) return false;
+          
+          sec=sec->next;
+          fir=fir->next; 
+       }
+       return true;
     }
 };
