@@ -11,10 +11,11 @@
 class Solution {
 public:
     ListNode* partition(ListNode* head, int x) {
-        ListNode beforehead(0);
-        ListNode afterhead(0);
-        ListNode*before=&beforehead;
-        ListNode*after=&afterhead;
+       
+        ListNode*beforehead=new ListNode(0);
+        ListNode*afterhead=new ListNode(0);
+        ListNode* before = beforehead;
+        ListNode* after = afterhead;
         ListNode*curr=head;
         while(curr!=nullptr)
         {
@@ -31,8 +32,8 @@ public:
             curr=curr->next;
         }
         after->next=NULL;
-        before->next=afterhead.next;
+        before->next=afterhead->next;
 
-        return beforehead.next;
+        return beforehead->next;
     }
 };
