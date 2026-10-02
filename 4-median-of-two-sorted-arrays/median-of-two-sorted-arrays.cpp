@@ -1,34 +1,49 @@
 class Solution {
 public:
-    double findMedianSortedArrays(vector<int>& a, vector<int>& b) {
-        int n1=a.size();
-        int n2=b.size();
-        if(n1>n2) return findMedianSortedArrays(b,a);
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
 
-        int low=0,high=n1;
-        int left=(n1+n2+1)/2;
-        int n=n1+n2;
-        while(low<=high)
-        {
-            int mid1=(low+high)/2;
-            int mid2=left-mid1;
-            int l1=INT_MIN,l2=INT_MIN;
-            int r1=INT_MAX,r2=INT_MAX;
-            if(mid1<n1) r1=a[mid1];
-            if(mid2<n2) r2=b[mid2];
-            if(mid1-1>=0) l1=a[mid1-1];
-            if(mid2-1>=0) l2=b[mid2-1];
-
-            if(l1<=r2 && l2<=r1)
-            {
-                if(n%2==1)  return max(l1,l2);
-                else
-               return ((double)(max(l1,l2)+min(r1,r2)))/2.0;
-            }
-            else if(l1>l2) high=mid1-1;
-            else
-            low=mid1+1;
+        if (nums1.size() > nums2.size()) {
+            return findMedianSortedArrays(nums2, nums1);
         }
+
+        int m = nums1.size();
+        int n = nums2.size();
+
+        int low = 0;
+        int high = m;
+
+        int halfLen = (m + n + 1) / 2;
+
+        while (low <= high) {
+
+            int cut1 = low + (high - low) / 2;
+            int cut2 = halfLen - cut1;
+
+            int left1 = (cut1 == 0) ? INT_MIN : nums1[cut1 - 1];
+            int right1 = (cut1 == m) ? INT_MAX : nums1[cut1];
+
+            int left2 = (cut2 == 0) ? INT_MIN : nums2[cut2 - 1];
+            int right2 = (cut2 == n) ? INT_MAX : nums2[cut2];
+
+            if (left1 <= right2 && left2 <= right1) {
+
+                if ((m + n) % 2 != 0) {
+                    return max(left1, left2);
+                }
+                else {
+                    return (double)(max(left1, left2) + min(right1, right2)) / 2.0;
+                }
+            }
+
+            else if (left1 > right2) {
+                high = cut1 - 1;
+            }
+
+            else {
+                low = cut1 + 1;
+            }
+        }
+
         return 0.0;
     }
 };
